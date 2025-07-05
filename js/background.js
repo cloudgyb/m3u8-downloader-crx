@@ -34,14 +34,17 @@ chrome.webRequest.onBeforeRequest.addListener(async details => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({url: details.url})
-    }).then(response => response.json())
+        body: JSON.stringify(videoInfo)
+    }).then(response => {
+        return response.json();
+    })
         .then(result => {
             console.log(result);
         })
         .catch(error => {
             console.info('请求出错:', error, '\n M3U8 Downloader 可能未启动！');
         });
+
     let options = {
         iconUrl: '../img/icon.png',
         message: '视频地址：' + details.url,
