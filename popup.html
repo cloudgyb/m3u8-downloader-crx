@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <title>popup页</title>
+    <title>M3U8 Downloader 插件</title>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
             font-family: 'Microsoft Yahei', sans-serif;
-            width: 300px;
+            width: 260px;
             min-height: 100px;
         }
 
@@ -17,17 +17,41 @@
     </style>
 </head>
 <body>
-<div style="text-align: center;margin-top: 20px;">
-    <img src="img/icon.png" alt="m3u8 downloader" style="width:50px;height:50px;"/>
+<div style="text-align: center;margin-top: 15px;">
+    <img src="img/icon.png" alt="m3u8 downloader" style="width:35px;height:35px;"/>
 </div>
-<h1 style="text-align: center">m3u8流媒体视频捕获</h1>
+<h1 style="text-align: center;font-size: 20px">
+    <span style="
+        font-weight: bold;
+        background: linear-gradient(45deg, #04049c, #4286f4, #04c8de);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    ">M3U8</span>
+    <span>流媒体视频自动捕获</span></h1>
+<div style="text-align: center;font-size: 15px">
+    目前检测到&nbsp;<span id="videoCount" style="color: red">0</span>&nbsp;个视频
+</div>
+<br/>
 <div style="text-align: center">
-    目前检测到<span id="videoCount">0</span>个视频
+    <button id="viewListBtn" style="
+        border: none;
+        padding: 10px 22px;
+        background: linear-gradient(135deg, #04049c, #4286f4);
+        color: white;
+        font-size: 14px;
+        border-radius: 30px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    ">
+        查看视频URL列表
+    </button>
 </div>
-<div style="text-align: center">
-    <button id="viewListBtn">查看视频URL列表</button>
+<hr/>
+<div style="text-align: center;color: darkgray;font-size: 8px">
+    <span>帮助：该插件自动捕获 m3u8 流媒体视频，并自动在 M3U8 下载器中创建下载任务。</span>
 </div>
-<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="js/popup.js"></script>
 </body>
 </html>
