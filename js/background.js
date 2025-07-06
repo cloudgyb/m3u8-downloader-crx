@@ -2,8 +2,40 @@ console.log('background.js loading...')
 
 const localStorage = chrome.storage.local
 
-// web请求监听，最后一个参数表示阻塞式，需单独声明权限：webRequestBlocking
-chrome.webRequest.onBeforeRequest.addListener(async details => {
+let interceptEnabled = false
+
+function updateInterception() {
+    if (interceptEnabled) {
+        chrome.webRequest.onBeforeRequest.addListener(webRequestInterceptHandler, {urls: ["<all_urls>"]});
+        //chrome.action.setIcon({ path: "icons/on32.png" });
+    } else {
+        chrome.webRequest.onBeforeRequest.removeListener(webRequestInterceptHandler);
+        //chrome.action.setIcon({ path: "icons/off32.png" });
+    }
+}
+
+localStorage.get(['interceptEnabled'], (data) => {
+    interceptEnabled = data.interceptEnabled ?? false;
+    updateInterception();
+});
+
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.type === 'POPUP_TO_BACKGROUND_SWITCH') {
+        console.log('收到 popup 消息，自动捕获开关:', request.data);
+        interceptEnabled = request.data;
+        localStorage.set({interceptEnabled: request.data}).then(r => console.log(r));
+        updateInterception();
+        // 异步操作示例
+        setTimeout(() => {
+            sendResponse({status: 'success', received: request.data});
+        }, 500);
+        // 保持连接开放（重要！）
+        return true;
+    }
+});
+
+let webRequestInterceptHandler = async (details) => {
     // 判断 URL path 是否以 .m3u8 结尾
     if (!URL.canParse(details.url) || !URL.parse(details.url).pathname.endsWith(".m3u8")) {
         return;
@@ -56,8 +88,8 @@ chrome.webRequest.onBeforeRequest.addListener(async details => {
         .then(r => {
             console.debug(r);
         });
-
-}, {urls: ["<all_urls>"]});
+    return {cancel: false};
+}
 
 console.log('background.js loaded!')
 
