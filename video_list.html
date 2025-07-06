@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3U8 Downloader - 视频URL列表管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            margin: 0 3px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            margin: 0 5px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .pagination button.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .pagination button:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #searchInput {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .status-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            display: block;
+        }
+
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 style="
+        font-weight: bold;
+        background: linear-gradient(45deg, #04049c, #4286f4, #04c8de);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    ">视频URL列表管理</h1>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="搜索标题或URL...">
+        <div>共 <span id="totalCount">0</span> 条记录</div>
+    </div>
+
+    <div id="statusMessage" class="status-message"></div>
+
+    <table id="dataTable">
+        <thead>
+        <tr>
+            <th>发现时间</th>
+            <th>标题</th>
+            <th>URL</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        <!-- 数据将通过JavaScript动态加载 -->
+        </tbody>
+    </table>
+
+    <div class="pagination" id="pagination">
+        <!-- 分页按钮将通过JavaScript动态生成 -->
+    </div>
+</div>
+
+<script type="application/javascript" src="js/video_list.js"></script>
+</body>
+</html>
