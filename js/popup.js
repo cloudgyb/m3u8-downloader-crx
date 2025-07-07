@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     chrome.storage.local.get('videoCount', function (result) {
-        document.getElementById("videoCount").innerHTML = (result.videoCount)
+        document.getElementById("videoCount").innerHTML = (result.videoCount ?? 0)
     })
 
     // 打开后台页
