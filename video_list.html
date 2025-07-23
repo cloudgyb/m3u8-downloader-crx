@@ -72,7 +72,11 @@
         }
 
         .delete-btn {
+            height: 30px;
             background-color: #f44336;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: white;
         }
 
@@ -150,7 +154,7 @@
 
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="搜索标题或URL...">
-        <div>共 <span id="totalCount">0</span> 条记录</div>
+        <button id="clearBtn" class="action-btn delete-btn">清空列表</button>
     </div>
 
     <div id="statusMessage" class="status-message"></div>
@@ -168,7 +172,7 @@
         <!-- 数据将通过JavaScript动态加载 -->
         </tbody>
     </table>
-
+    <div style="text-align: center">共 <span id="totalCount">0</span> 条记录</div>
     <div class="pagination" id="pagination">
         <!-- 分页按钮将通过JavaScript动态生成 -->
     </div>

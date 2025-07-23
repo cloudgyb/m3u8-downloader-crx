@@ -7,6 +7,15 @@ let filteredData = [];
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', function () {
     loadDataFromStorage();
+    document.getElementById('clearBtn').addEventListener('click', function () {
+        chrome.storage.local.remove(['video_list'], function () {
+            showMessage('清除成功', 'success');
+            filteredData = [];
+            updateTotalCount();
+            renderTable();
+            renderPagination();
+        })
+    })
 });
 
 // 从chrome.storage.local加载数据
@@ -24,6 +33,7 @@ function loadDataFromStorage() {
         }
     });
 }
+
 
 // 渲染表格数据
 function renderTable() {
