@@ -57,6 +57,9 @@ let webRequestInterceptHandler = async (details) => {
     // 保存视频信息
     localStorage.get("video_list").then(obj => {
         let video_list = obj['video_list'] ? obj['video_list'] : [];
+        if(video_list.length > 200) {
+            video_list.shift();
+        }
         video_list.push(videoInfo);
         localStorage.set({video_list: video_list}).then(r => console.log(r))
     })
