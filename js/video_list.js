@@ -8,13 +8,15 @@ let filteredData = [];
 document.addEventListener('DOMContentLoaded', function () {
     loadDataFromStorage();
     document.getElementById('clearBtn').addEventListener('click', function () {
-        chrome.storage.local.remove(['video_list'], function () {
-            showMessage('清除成功', 'success');
-            filteredData = [];
-            updateTotalCount();
-            renderTable();
-            renderPagination();
-        })
+        if (confirm('确定要清除所有记录吗？')) {
+            chrome.storage.local.remove(['video_list'], function () {
+                showMessage('清除成功', 'success');
+                filteredData = [];
+                updateTotalCount();
+                renderTable();
+                renderPagination();
+            })
+        }
     })
 });
 
@@ -49,7 +51,7 @@ function renderTable() {
     const end = start + rowsPerPage;
     const pageData = filteredData.slice(start, end);
 
-    pageData.forEach((item, index) => {
+    pageData.forEach((item) => {
         const row = document.createElement('tr');
 
         // 发现时间
@@ -197,7 +199,7 @@ function renderPagination() {
 
     for (let i = startPage; i <= endPage; i++) {
         const pageBtn = document.createElement('button');
-        pageBtn.textContent = i;
+        pageBtn.textContent = i + "";
         if (i === currentPage) {
             pageBtn.className = 'active';
         }
@@ -217,7 +219,7 @@ function renderPagination() {
         }
 
         const lastBtn = document.createElement('button');
-        lastBtn.textContent = totalPages;
+        lastBtn.textContent = totalPages + "";
         lastBtn.onclick = function () {
             currentPage = totalPages;
             renderTable();
@@ -278,13 +280,4 @@ function showMessage(message, type) {
         msgElement.className = 'status-message';
         msgElement.textContent = '';
     }, 3000);
-}
-
-// 格式化文件大小
-function formatFileSize(bytes) {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
