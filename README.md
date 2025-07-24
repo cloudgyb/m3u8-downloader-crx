@@ -27,7 +27,7 @@
 
 1. 下载项目源码或克隆仓库：
    ```shell
-    bash git clone https://github.com/yourusername/m3u8-downloader.git
+    bash git clone https://github.com/cloudgyb/m3u8-downloader-crx.git
    ```
 2. 打开 Chrome 浏览器，进入 `chrome://extensions` 页面。
 3. 启用“开发者模式”。
