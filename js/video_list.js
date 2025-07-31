@@ -124,7 +124,15 @@ function sendToDownloader(item) {
         })
         .catch(error => {
             console.info('发送到下载器失败:', error);
-            showMessage('发送到下载器失败: ' + error.message, 'error');
+            if (error.message === 'Failed to fetch') {
+                let startHtml = "<a href='m3u8downloader://'>点击立即启动</a>"
+                let downloadHtml = "<a href='https://github.com/cloudgyb/m3u8-downloader/releases' target='_blank'>下载 M3U8 Downloader</a>";
+                showMessage('请检查 M3U8 Downloader 是否已启动！' + startHtml +
+                    ' 或 ' + downloadHtml,
+                    'warn');
+            } else {
+                showMessage('发送到下载器失败: ' + error.message, 'error');
+            }
         });
 }
 
@@ -273,11 +281,11 @@ function updateTotalCount() {
 // 显示状态消息
 function showMessage(message, type) {
     const msgElement = document.getElementById('statusMessage');
-    msgElement.textContent = message;
+    msgElement.innerHTML = message;
     msgElement.className = 'status-message ' + type;
 
     setTimeout(() => {
         msgElement.className = 'status-message';
-        msgElement.textContent = '';
-    }, 3000);
+        msgElement.innerHTML = '';
+    }, 5000);
 }
