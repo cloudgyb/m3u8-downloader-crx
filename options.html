@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>M3U8 Downloader 插件设置</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #4286f4;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4286f4;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            width: 300px;
+            font-weight: bold;
+        }
+        .form-group input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .strategy-list {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .strategy-item {
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            background-color: #fafafa;
+        }
+        .strategy-item:hover {
+            background-color: #f0f8ff;
+        }
+        .strategy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .domain-input {
+            width: 200px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        .strategy-controls {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background-color: #4286f4;
+            color: white;
+        }
+        .btn-danger {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-success {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .strategy-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .strategy-form-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        .strategy-form-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .strategy-form-item input, .strategy-form-item select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>M3U8 Downloader 插件设置</h1>
+        
+        <!-- 基本设置 -->
+        <div class="section">
+            <div class="section-title">基本设置</div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="interceptEnabled">
+                    启用插件
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="notificationEnabled">
+                    识别到 m3u8 链接发送系统通知
+                </label>
+            </div>
+        </div>
+        
+        <!-- 域名策略设置 -->
+        <div class="section">
+            <div class="section-title">视频名称识别策略</div>
+            <p>为不同域名配置视频名称提取策略：</p>
+            
+            <div class="strategy-list" id="strategyList">
+                <!-- 策略项将通过JavaScript动态添加 -->
+            </div>
+            
+            <div style="margin-top: 15px;">
+                <button class="btn btn-primary" id="addStrategyBtn">添加策略</button>
+            </div>
+        </div>
+        
+        <!-- 操作按钮 -->
+        <div class="actions">
+            <button class="btn btn-success" id="save-btn">保存设置</button>
+            <button class="btn" id="reset-btn">重置</button>
+        </div>
+    </div>
+
+    <script src="js/options.js"></script>
+</body>
+</html>

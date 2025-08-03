@@ -31,4 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 打开 options 配置页
+    document.getElementById("viewOptionsBtn").addEventListener("click", function () {
+        chrome.tabs.create({url: chrome.runtime.getURL('options.html')}).then(tab => {
+            console.log(tab)
+        });
+    });
+
 });

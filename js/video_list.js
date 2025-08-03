@@ -74,6 +74,7 @@ function renderTable() {
         const urlCell = document.createElement('td');
         const urlText = document.createElement('div');
         urlText.textContent = item.url || '';
+        urlCell.setAttribute('title', urlText.textContent);
         urlText.style.whiteSpace = 'nowrap';
         urlText.style.overflow = 'hidden';
         urlText.style.textOverflow = 'ellipsis';
