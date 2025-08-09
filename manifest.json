@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "M3U8 Downloader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "M3U8 Downloader，m3u8 流媒体视频下载器插件",
   "icons": {
     "16": "img/icon16.png",
