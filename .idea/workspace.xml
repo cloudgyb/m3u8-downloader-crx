@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a208a55d-412c-4abf-ad71-33f9b153ee6e" name="Changes" comment="refactor(popup): 优化视频计数显示逻辑&#10;&#10;- 在显示视频计数时，使用空值合并运算符（??）处理未定义的情况&#10;- 如果 result.videoCount 未定义，将显示 0，避免显示 NaN 或其他不期望的结果">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/m3u8-downloader-crx.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/m3u8-downloader-crx.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/background.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/background.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,12 +36,12 @@
     &quot;assignee&quot;: &quot;cloudgyb&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/cloudgyb/m3u8-downloader-crx.git",
-    "accountId": "dff22b38-8322-41f4-b1df-98191c76ab2d"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/cloudgyb/m3u8-downloader-crx.git&quot;,
+    &quot;accountId&quot;: &quot;dff22b38-8322-41f4-b1df-98191c76ab2d&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -57,7 +57,10 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "dev",
+    "javascript.preferred.runtime.type.id": "node",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "D:/WebstormProjects/m3u8-downloader-crx",
     "node.js.detected.package.eslint": "true",
@@ -78,7 +81,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-WS-262.9437.145" />
       </set>
     </attachedChunks>
   </component>
@@ -104,6 +107,8 @@
       <workItem from="1751872328872" duration="114000" />
       <workItem from="1751878114379" duration="208000" />
       <workItem from="1751878333495" duration="1087000" />
+      <workItem from="1791941607642" duration="150000" />
+      <workItem from="1791941776481" duration="5242000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />

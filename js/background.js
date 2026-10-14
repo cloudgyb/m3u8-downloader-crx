@@ -4,13 +4,19 @@ const localStorage = chrome.storage.local
 
 let interceptEnabled = false
 let domainVideoTitleExtractStrategiesMap = new Map();
+const urlFilter = {
+    urls: ["http://*/*", "https://*/*"],
+    types: ["main_frame", "sub_frame", "xmlhttprequest", "other"]
+}
 
 function updateInterception() {
     if (interceptEnabled) {
-        chrome.webRequest.onBeforeRequest.addListener(webRequestInterceptHandler, {urls: ["<all_urls>"]});
+        chrome.webRequest.onBeforeRequest.addListener(webRequestInterceptHandler, urlFilter);
+        chrome.webRequest.onHeadersReceived.addListener(webResponseHeadersHandler, urlFilter, ["responseHeaders"]);
         //chrome.action.setIcon({ path: "icons/on32.png" });
     } else {
         chrome.webRequest.onBeforeRequest.removeListener(webRequestInterceptHandler);
+        chrome.webRequest.onHeadersReceived.removeListener(webResponseHeadersHandler);
         //chrome.action.setIcon({ path: "icons/off32.png" });
     }
 }
@@ -56,9 +62,66 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-let webRequestInterceptHandler = async (details) => {
-    // 判断 URL path 是否以 .m3u8 结尾
-    if (!URL.canParse(details.url) || !URL.parse(details.url).pathname.endsWith(".m3u8")) {
+// 用于去重：同一视频请求可能同时命中「路径以 .m3u8 结尾」和「响应头 content-type」两种检测方式
+const processedVideoUrls = new Map();
+const PROCESSED_VIDEO_URL_TTL = 10 * 1000;
+
+// 标记 URL 已处理，返回 false 表示近期已处理过（用于去重）
+function markUrlProcessed(url) {
+    const now = Date.now();
+    for (const [u, t] of processedVideoUrls) {
+        if (now - t > PROCESSED_VIDEO_URL_TTL) {
+            processedVideoUrls.delete(u);
+        }
+    }
+    if (processedVideoUrls.has(url)) {
+        return false;
+    }
+    processedVideoUrls.set(url, now);
+    return true;
+}
+
+// 判断 URL 路径是否以 .m3u8 结尾
+function isM3u8Url(url) {
+    return URL.canParse(url) && URL.parse(url).pathname.endsWith(".m3u8");
+}
+
+// 判断响应头 content-type 是否为 HLS 流媒体类型
+function isMpegUrlContentType(details) {
+    return (details.responseHeaders || []).some(header =>
+        header.name.toLowerCase() === 'content-type' &&
+        header.value.toLowerCase().includes('application/vnd.apple.mpegurl')
+    );
+}
+
+// 路径检测：URL 以 .m3u8 结尾
+let webRequestInterceptHandler = (details) => {
+    if (!isM3u8Url(details.url)) {
+        return;
+    }
+    if (!markUrlProcessed(details.url)) {
+        return;
+    }
+    processVideo(details);
+    return {cancel: false};
+}
+
+// 响应头检测：content-type 为 application/vnd.apple.mpegurl
+let webResponseHeadersHandler = (details) => {
+    if (!isMpegUrlContentType(details)) {
+        return;
+    }
+    if (!markUrlProcessed(details.url)) {
+        return;
+    }
+    processVideo(details);
+}
+
+// 处理检测到的视频：计数、提取标题、保存、发送到下载器、通知
+let processVideo = async (details) => {
+    console.log(details)
+    // 无关联标签页的请求（如后台发起的请求）拿不到标题，跳过
+    if (details.tabId < 0) {
         return;
     }
     // 累计发现视频计数
@@ -69,7 +132,7 @@ let webRequestInterceptHandler = async (details) => {
     })
     // 获取当前标签页标题
     const tab = await chrome.tabs.get(details.tabId);
-    let tabTitle = tab.title || tabTitle;
+    let tabTitle = tab.title;
     let hostname = URL.parse(details.url).hostname;
     let tabHostname = URL.parse(tab.url).hostname;
     console.log("background.js tab url:", tab.url);
@@ -143,7 +206,6 @@ let webRequestInterceptHandler = async (details) => {
                 });
         }
     })
-    return {cancel: false};
 }
 const removePrefixSuffix = (str, prefix, suffix) => {
     str = str.startsWith(prefix) ? str.slice(prefix.length) : str;
